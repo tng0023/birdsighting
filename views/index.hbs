@@ -1,74 +1,47 @@
-<h1>Bird Records</h1>
+<h1>Home Maintenance Reminders</h1>
+<hr>
+<div class="addNewJob">
 
-<div class="messages">
-  {{#each messages.error}}
-    <p class="error_msg">{{this}}</p>
-  {{/each}}
+    <h3>Add New Job</h3>
+
+    <div class="messages">
+      {{#each messages.error}}
+        <p class= 'error_msg'>{{this}}</p>
+      {{/each}}
+    </div>
+
+    <form action="/" method="POST">
+      Type: <input name="type" type="text" required>
+      <br>
+      Company: <input name="company" type="text" required>
+      <br>
+      Contact Name: <input name="contact" type="text"required>
+      <br>
+      Phone: <input name="phone" type="number" min="10">
+      <br>
+      Date of Service: <input name="dateSet" type="datetime-local" required>
+      <br>
+      <input name="addJob" type="submit" value="Add new job">
+      <br>
+    </form>
+
 </div>
 
-
-<div class="addNewSighting">
-  <h3>Add new bird</h3>
-
-  <form action="/" method="POST">
-    Name: <input type="text" name="name" required>
-    <br>
-    Description: <input name="description" type="text" required>
-    <br>
-    Average Eggs Laid: <input name="averageEggsLaid" type="number" min="1" max="50" required>
-    <br>
-    Threatened? <input name="threatened" type="checkbox">
-    <br>
-    Nest location: <input name="nextLocation" type="text">
-    <br>
-    Nest materials: <input name="nextMaterials" type="text">
-    <br>
-    Date seen: <input name="dateSeen" type="date">
-    <br>
-    <input name="addBird" type="submit" value="Add new sighting">
-    <br>
-  </form>
-</div>
-
-<div class="birdsSeen">
-  <h3>All sightings</h3>
-
-  {{#each birds}}
-    <p>Name: {{this.name}}</p>
-    <p>Description: {{this.description}}</p>
-    <p>Average eggs laid: {{this.averageEggsLaid}}</p>
-    <p>Nest Location: {{this.nest.location}}</p>
-    <p>Nest Materials: {{this.nest.materials}}</p>
-    {{#if this.threatened}}
-      <p>This bird is threatened</p>
-    {{/if}}
-
-  <p>Dates seen:</p>
-  <ul>
-  {{#each this.datesSeen}}
-    <li>
-      {{dateFormatter this}}
-    </li>
-    <li>{{this}}</li>
-  {{else}}
-    <li>No sightings reported</li>
-  {{/each}}
-  </ul>
-
-  <p>Add new date seen</p>
-  <form action="/addDate" method="POST">
-    <input type="date" name="dateSeen" required>
-    <input type="hidden" name="_id" value="{{this._id}}">
-    <input type="hidden" name="name" value="{{this.name}}">
-    <input type="submit" name="add" value="Add new date">
-  </form>
-  <form action="delete" method="POST">
+<div class="reminderSet">
+  <hr>
+  <h3>All Appointments</h3>
+  {{#each types}}
+    <p>Type: {{this.type}}</p>
+    <p>Company: {{this.company}}</p>
+    <p>Contact Name: {{this.contact}}</p>
+    <p>Phone: {{this.phone}}</p>
+    <p>Date of Service: {{this.dateSet}}</p>
+    <form action="delete" method="POST">
     <input type="hidden" name="_id" value="{{this._id}}">
     <input class="delete_button" type="submit" name="delete" value="Delete">
-  </form>
-  <hr>
-
+    <hr>
   {{else}}
-    <p>No bird records in the database</p>
+  <p>No appointments set in database</p>
   {{/each}}
+</form>
 </div>

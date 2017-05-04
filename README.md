@@ -1,3 +1,3 @@
-# BirdSighting app
+#HomeMaintenance App
 
-An app to add records of birdsighting.
+An app to add home maintenance reminders.
