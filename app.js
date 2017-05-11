@@ -15,8 +15,8 @@ var users = require('./routes/users');
 var hbshelpers = require('./hbshelpers/helpers');
 
 var mongo_pw = process.env.MONGO_PW;
-var url = 'mongodb://' + 'localhost:27017/typeSchema';
-//var url = 'mongodb://myUserAdmin:' + mongo_pw + '@localhost:27017/garden?authSource=admin';
+var url = process.env.MONGO_URL;
+var url = "mongodb://tng0023:621180@ds133961.mlab.com:33961/homemaintenance";
 mongoose.connect(url);
   console.log('connected to MongoDB');
 
