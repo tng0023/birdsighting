@@ -8,10 +8,11 @@ router.get('/', function(req, res){
     if(err){
       return next(err);
     }
-    res.render('index',{types: types});
+    res.render('index',{types: types}); //send
   })
 });
 
+/* POST to home page - handle form submit */
 router.post('/', function(req, res, next){
 
   var typeData = {};
@@ -39,17 +40,19 @@ type.save(function(err, newtype){
 
     if(err.code==11000){ //Duplicate key error code
       req.flash('error', 'A reminder with that name already exists');
-      return res. redirect('/')
+      return res.redirect('/')
     }
 
     return next(err);
   }
 
   console.log(newtype);
+  req.flash('error','Job has been added!');
   return res.redirect('/')
 })
 });
 
+//post to delete task
 router.post('/delete', function(req,res,next){
 
   var id = req.body._id;
@@ -67,5 +70,10 @@ router.post('/delete', function(req,res,next){
   return res.redirect('/')
   })
 });
+
+router.get('/videos', function(req, res, next){
+  res.render('videos')
+});
+
 
 module.exports = router;

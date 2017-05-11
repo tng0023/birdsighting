@@ -1,27 +1,39 @@
-<h1>Home Maintenance Reminders</h1>
-<hr>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="stylesheets/style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<body>
+<div class="container">
+  <div class="jumbotron">
+<h1>Home Maintenance Task List</h1>
+</div>
+</div>
+
+
 <div class="addNewJob">
-
-    <h3>Add New Job</h3>
-
+  <h1>Fill out the fields below to add a task!</h1>
     <div class="messages">
       {{#each messages.error}}
         <p class= 'error_msg'>{{this}}</p>
       {{/each}}
     </div>
-
+<div class="form">
     <form action="/" method="POST">
-      Type: <input name="type" type="text" required>
-      <br>
+      Date & Time of Service: <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> <input name="dateSet" type="datetime-local" required> (Click down-arrow to select date)
+      <br><br>
+      Type of Job: <input name="type" type="text" required>
+      <br><br>
       Company: <input name="company" type="text" required>
-      <br>
+      <br><br>
       Contact Name: <input name="contact" type="text"required>
-      <br>
-      Phone: <input name="phone" type="number" min="10">
-      <br>
-      Date of Service: <input name="dateSet" type="datetime-local" required>
-      <br>
-      <input name="addJob" type="submit" value="Add new job">
+      <br><br>
+      Phone: <input name="phone" type="number" maxlength="10" required>
+      <br><br>
+      Notes: <input name="notes" type="textarea">
+      <br><br>
+      <input id="add" name="addJob" type="submit" value="Add new job">
       <br>
     </form>
 
@@ -29,19 +41,49 @@
 
 <div class="reminderSet">
   <hr>
-  <h3>All Appointments</h3>
+  <h2><b><u>All Tasks</u></b></h2>
+  <br>
   {{#each types}}
-    <p>Type: {{this.type}}</p>
-    <p>Company: {{this.company}}</p>
-    <p>Contact Name: {{this.contact}}</p>
-    <p>Phone: {{this.phone}}</p>
-    <p>Date of Service: {{this.dateSet}}</p>
-    <form action="delete" method="POST">
-    <input type="hidden" name="_id" value="{{this._id}}">
-    <input class="delete_button" type="submit" name="delete" value="Delete">
+    <table>
+    <tr>
+    <th>Date of Service</th>
+    <th>Type</th>
+    <th>Company</th>
+    <th>Contact Name</th>
+    <th>Phone</th>
+    <th>Notes</th>
+    <th>Delete?</th>
+    <th>Send Email?</th>
+    </tr>
+    <tr>
+      <td>{{dateFormatter this.dateSet}}</td>
+      <td>{{this.type}}</td>
+      <td>{{this.company}}</td>
+      <td>{{this.contact}}</td>
+      <td>{{this.phone}}</td>
+      <td>{{this.notes}}</td>
+      <td><form action="delete" method="POST">
+          <input type="hidden" name="_id" value="{{this._id}}">
+          <input onclick="deleteFunction()" id="delete_button" type="submit" name="delete" value="Delete Appointment"></td>
+      <td id="email"><a href="mailto:test@gmail.com" target="_top">Send Mail</a></td>
+    </tr>
+    </table>
     <hr>
   {{else}}
-  <p>No appointments set in database</p>
+  <p>No appointments have been created!</p>
   {{/each}}
 </form>
+</table>
+<h3>Videos of the week:Click <a href="/videos">HERE</a> to see the home improvement videos of the Week!</h3>
+<hr>
+<footer>© 2017 - Tommy Ng</footer>
+<footer>Home Improvement Links: <a href="http://www.homedepot.com" target="_blank">Home Depot</a> | <a href="http://www.lowes.com" target="_blank">Lowe's Home Improvement</a> |
+<a href="http://www.menards.com" target="_blank">Menards</a></footer><br>
+</body>
 </div>
+
+<script>
+  function deleteFunction(){
+    confirm("Are you sure you want to delete this item?");
+  }
+</script>
